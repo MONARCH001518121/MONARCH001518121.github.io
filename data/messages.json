@@ -1,0 +1,11 @@
+[
+  {
+    "id": "MSG-1791367142997",
+    "name": "Test Client",
+    "email": "test@example.com",
+    "subject": "V8 CAD Inquiry",
+    "message": "Testing contact API backend.",
+    "timestamp": "2026-10-07T09:59:02.997Z",
+    "status": "unread"
+  }
+]

@@ -1653,8 +1653,13 @@
 
   <header class="shell nav">
     <a class="brand" href="#"><span class="mark"><span>AX</span></span><span>AXIS//NULL</span></a>
-    <nav class="navlinks" aria-label="Primary"><a href="#work">WORK</a><a href="#about">ABOUT</a><a
-        href="#contact">CONTACT</a></nav>
+    <nav class="navlinks" aria-label="Primary">
+      <a href="#work">WORK</a>
+      <a href="#about">ABOUT</a>
+      <a href="#skills">SKILLS</a>
+      <a href="./resume.html" target="_blank" style="color: var(--red); font-weight: 700;">RESUME ↗</a>
+      <a href="#contact">CONTACT</a>
+    </nav>
     <label class="sound"><button class="toggle" id="soundToggle" aria-label="Toggle interface sounds"><i></i></button>
       AUDIO / <span id="soundState">OFF</span></label>
   </header>
@@ -2232,12 +2237,13 @@
         console.log("Resume download tracked.");
       }
 
-      const dummyLink = document.createElement("a");
-      dummyLink.href = "data:text/plain;charset=utf-8," + encodeURIComponent("M HASEEB IMRAN - MECHANICAL CAD ENGINEER RESUME\n\nSoftware Expertise: SolidWorks, CATIA V5, Fusion 360, ANSYS, GD&T, DFM/DFA, Sheet Metal.\nContact: m.haseebimran518121@gmail.com\nPhone: +92 370 0939440");
-      dummyLink.download = "M_Haseeb_Imran_CAD_Engineer_Resume.txt";
-      document.body.appendChild(dummyLink);
-      dummyLink.click();
-      document.body.removeChild(dummyLink);
+      const downloadLink = document.createElement("a");
+      downloadLink.href = "./M_Haseeb_Imran_CAD_Engineer_Resume.pdf";
+      downloadLink.download = "M_Haseeb_Imran_CAD_Engineer_Resume.pdf";
+      downloadLink.target = "_blank";
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
     }
 
     // 3D Glowing Orbs Data & Interactive Multi-Car Drive System

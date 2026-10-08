@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M Haseeb Imran — Mechanical & CAD Design Engineer Resume</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0f172a;
+      --secondary: #1e293b;
+      --accent: #dc2626;
+      --accent-light: #fee2e2;
+      --accent-cyan: #0284c7;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: var(--text);
+      background-color: #0b0f19;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      padding: 30px 15px;
+    }
+
+    .toolbar {
+      max-width: 860px;
+      margin: 0 auto 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #1e293b;
+      padding: 14px 24px;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .toolbar-title {
+      color: #f1f5f9;
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-action {
+      background: var(--accent);
+      color: #ffffff;
+      border: none;
+      padding: 8px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .btn-action:hover {
+      background: #b91c1c;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: #334155;
+      color: #f8fafc;
+    }
+
+    .btn-secondary:hover {
+      background: #475569;
+    }
+
+    /* Resume Document Container (Standard A4 dimensions) */
+    .resume-container {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 38px 44px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45);
+      border-radius: 2px;
+      position: relative;
+    }
+
+    /* Header Section */
+    .header {
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 20px;
+      margin-bottom: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .header-info {
+      flex: 1;
+    }
+
+    .name-title-wrap h1 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--primary);
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+
+    .name-title-wrap .subtitle {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-top: 6px;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .contact-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 18px;
+      margin-top: 14px;
+      font-size: 11.5px;
+      color: var(--secondary);
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      color: inherit;
+      font-weight: 500;
+    }
+
+    .contact-item svg {
+      width: 13px;
+      height: 13px;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .contact-item a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .contact-item a:hover {
+      color: var(--accent-cyan);
+      text-decoration: underline;
+    }
+
+    /* Layout Grid (Main Content & Sidebar) */
+    .resume-body {
+      display: grid;
+      grid-template-columns: 2.1fr 1fr;
+      gap: 28px;
+    }
+
+    /* Section Styling */
+    .section {
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--primary);
+      border-bottom: 1.5px solid var(--border);
+      padding-bottom: 4px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .section-title::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      display: inline-block;
+      border-radius: 1px;
+    }
+
+    /* Professional Summary */
+    .summary-text {
+      font-size: 12px;
+      line-height: 1.65;
+      color: #334155;
+      text-align: justify;
+    }
+
+    /* Projects & Experience */
+    .project-card {
+      margin-bottom: 16px;
+      page-break-inside: avoid;
+    }
+
+    .project-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 3px;
+    }
+
+    .project-name {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .project-role {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent-cyan);
+      font-family: 'Space Mono', monospace;
+    }
+
+    .project-meta {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      display: flex;
+      gap: 12px;
+    }
+
+    .project-bullets {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .project-bullets li {
+      position: relative;
+      padding-left: 14px;
+      font-size: 11.5px;
+      line-height: 1.55;
+      color: #334155;
+      margin-bottom: 4px;
+    }
+
+    .project-bullets li::before {
+      content: "▪";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 12px;
+      top: -1px;
+    }
+
+    .project-bullets li strong {
+      color: #0f172a;
+      font-weight: 600;
+    }
+
+    /* Sidebar Columns */
+    .skill-category {
+      margin-bottom: 14px;
+    }
+
+    .skill-cat-title {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .skill-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .badge {
+      background: #f1f5f9;
+      color: #1e293b;
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 3px 7px;
+      border-radius: 4px;
+      border: 1px solid #cbd5e1;
+    }
+
+    .badge.highlight {
+      background: #fef2f2;
+      color: #991b1b;
+      border-color: #fecaca;
+    }
+
+    .badge.cyan {
+      background: #f0f9ff;
+      color: #075985;
+      border-color: #bae6fd;
+    }
+
+    /* Education Item */
+    .edu-item {
+      margin-bottom: 12px;
+    }
+
+    .edu-degree {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .edu-school {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .edu-date {
+      font-size: 10px;
+      font-family: 'Space Mono', monospace;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* Certifications */
+    .cert-item {
+      font-size: 11px;
+      margin-bottom: 6px;
+      padding-left: 12px;
+      position: relative;
+      line-height: 1.45;
+      color: #334155;
+    }
+
+    .cert-item::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 10px;
+    }
+
+    /* Print Specific Formatting for 100% Crisp Vector PDF */
+    @media print {
+      body {
+        background: transparent;
+        padding: 0;
+      }
+
+      .toolbar {
+        display: none !important;
+      }
+
+      .resume-container {
+        box-shadow: none;
+        padding: 24px 30px;
+        width: 100%;
+        max-width: 100%;
+        min-height: auto;
+      }
+
+      @page {
+        size: A4 portrait;
+        margin: 10mm 10mm 10mm 10mm;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Interactive Action Bar for Browser View -->
+  <div class="toolbar">
+    <div class="toolbar-title">AXIS//NULL SYSTEMS — EXECUTIVE RESUME GENERATOR</div>
+    <div class="toolbar-actions">
+      <button class="btn-action" onclick="window.print()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <polyline points="6 9 6 2 18 2 18 9"></polyline>
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+          <rect x="6" y="14" width="12" height="8"></rect>
+        </svg>
+        Print / Save to PDF
+      </button>
+      <a href="./index.html" class="btn-action btn-secondary">
+        ← Back to Portfolio
+      </a>
+    </div>
+  </div>
+
+  <!-- Main Resume Canvas -->
+  <div class="resume-container" id="resume">
+
+    <!-- Header Section -->
+    <header class="header">
+      <div class="header-info">
+        <div class="name-title-wrap">
+          <h1>Muhammad Haseeb Imran</h1>
+          <div class="subtitle">Mechanical &amp; CAD Design Engineer | Automotive &amp; Product Specialist</div>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <a href="mailto:m.haseebimran518121@gmail.com">m.haseebimran518121@gmail.com</a>
+          </div>
+
+          <div class="contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+              </path>
+            </svg>
+            <span>+92 370 0939440</span>
+          </div>
+
+          <div class="contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>Pakistan</span>
+          </div>
+
+          <div class="contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+              </path>
+            </svg>
+            <a href="https://axisnull-cad.com" target="_blank">Portfolio: AXIS//NULL CAD</a>
+          </div>
+
+          <div class="contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+              <rect x="2" y="9" width="4" height="12"></rect>
+              <circle cx="4" cy="4" r="2"></circle>
+            </svg>
+            <a href="https://linkedin.com" target="_blank">LinkedIn Profile</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Layout: Left (Core Projects & Experience) | Right (Skills, Education, Standards) -->
+    <div class="resume-body">
+
+      <!-- LEFT COLUMN -->
+      <div class="main-column">
+
+        <!-- Executive Summary -->
+        <section class="section">
+          <div class="section-title">Professional Profile</div>
+          <p class="summary-text">
+            Results-driven <strong>Mechanical &amp; CAD Design Engineer</strong> with extensive expertise in 3D
+            parametric modeling, multi-body kinematics, Class-A surfacing, and <strong>Design for Manufacturing &amp;
+              Assembly (DFM/DFA)</strong>. Proven track record of architecting production-ready powertrain systems,
+            precision sheet-metal enclosures, compliant fluid mechanisms, and 6-DOF robotic manipulators. Highly adept
+            at translating complex engineering requirements into high-tolerance fabrication models, ISO/ASME Y14.5
+            GD&amp;T drawings, and validated FEA/CFD simulations.
+          </p>
+        </section>
+
+        <!-- Flagship Engineering Projects -->
+        <section class="section">
+          <div class="section-title">Flagship Engineering Projects</div>
+
+          <!-- Project 1: V8 Engine -->
+          <div class="project-card">
+            <div class="project-header">
+              <span class="project-name">High-Compression V8 Powertrain Assembly (184 Components)</span>
+              <span class="project-role">Lead CAD Engineer</span>
+            </div>
+            <div class="project-meta">
+              <span>Powertrain &amp; Kinematics</span> | <span>SolidWorks, Motion Simulation, EASM</span>
+            </div>
+            <ul class="project-bullets">
+              <li>Architected a complete <strong>184-part V8 engine assembly</strong> from bottom-up: crankshaft,
+                connecting rods, pistons, camshafts, and valvetrain synchronization.</li>
+              <li>Executed <strong>dynamic interference checking and motion studies</strong> to eliminate part
+                collisions during 360° rotational cycles.</li>
+              <li>Generated high-resolution exploded-view assembly kinematics for manufacturing documentation and
+                service sequence planning.</li>
+            </ul>
+          </div>
+
+          <!-- Project 2: 6-DOF Robotic Arm -->
+          <div class="project-card">
+            <div class="project-header">
+              <span class="project-name">6-DOF Industrial Robotic Manipulator (680mm Reach)</span>
+              <span class="project-role">Mechanical Designer</span>
+            </div>
+            <div class="project-meta">
+              <span>Robotics &amp; Automation</span> | <span>SolidWorks, STEP, FEA Structural Analysis</span>
+            </div>
+            <ul class="project-bullets">
+              <li>Engineered a 6-axis articulated robotic arm featuring internal actuator housings, harmonic drive
+                mounts, and integrated cable management.</li>
+              <li>Conducted <strong>finite element analysis (FEA)</strong> on structural arm links under full-extension
+                static and dynamic payload conditions.</li>
+              <li>Standardized precision bearing seats and CNC-machined aluminum linkages adhering to tight ISO
+                tolerances.</li>
+            </ul>
+          </div>
+
+          <!-- Project 3: Industrial Gearbox -->
+          <div class="project-card">
+            <div class="project-header">
+              <span class="project-name">Modular Industrial Reduction Gearbox (16:1 Ratio)</span>
+              <span class="project-role">Transmission CAD Modeler</span>
+            </div>
+            <div class="project-meta">
+              <span>Power Transmission</span> | <span>SolidWorks, Gear Train Synthesis, DFM</span>
+            </div>
+            <ul class="project-bullets">
+              <li>Developed a high-torque <strong>16:1 multi-stage reduction gearbox (67 parts)</strong> with aligned
+                shaft geometry and inspection-first casing design.</li>
+              <li>Calculated gear tooth bending/contact stresses and designed custom oil-bath lubrication fluid
+                channels.</li>
+              <li>Integrated split-housing architecture for rapid disassembly, bearing replacement, and field
+                serviceability.</li>
+            </ul>
+          </div>
+
+          <!-- Project 4: Diaphragm Pump -->
+          <div class="project-card">
+            <div class="project-header">
+              <span class="project-name">Compliant Diaphragm Water Pump (12 L/min Flow)</span>
+              <span class="project-role">Fluid Systems Engineer</span>
+            </div>
+            <div class="project-meta">
+              <span>Fluid Mechanics</span> | <span>SolidWorks, 2D Drafting (PDF), CFD Flow Validation</span>
+            </div>
+            <ul class="project-bullets">
+              <li>Engineered a 42-part fluid displacement pump utilizing an eccentric cam drive and compliant elastomer
+                diaphragm.</li>
+              <li>Generated comprehensive <strong>2D manufacturing blueprints with GD&amp;T</strong> for injection
+                molding and sealing O-rings.</li>
+              <li>Streamlined flow chamber geometries via fluid path analysis to minimize cavitation and maximize
+                delivery pressure.</li>
+            </ul>
+          </div>
+
+          <!-- Project 5: PSU Sheet Metal Enclosure -->
+          <div class="project-card">
+            <div class="project-header">
+              <span class="project-name">Precision Sheet Metal Power Supply Enclosure</span>
+              <span class="project-role">Sheet Metal Specialist</span>
+            </div>
+            <div class="project-meta">
+              <span>Sheet Metal &amp; Thermal</span> | <span>SolidWorks Sheet Metal, Flat Patterns, SLDPRT</span>
+            </div>
+            <ul class="project-bullets">
+              <li>Designed a folded <strong>1.5mm steel enclosure (18 bends)</strong> utilizing precise K-factor and
+                bend deduction calculations for CNC press brake.</li>
+              <li>Integrated tool-less snap-fit cover mechanisms, punched ventilation louvers, and EMI shielding
+                boundaries.</li>
+            </ul>
+          </div>
+
+          <!-- Project 6: Gaming Mouse -->
+          <div class="project-card">
+            <div class="project-header">
+              <span class="project-name">Ergonomic Gaming Mouse Housing (82g Ultralight)</span>
+              <span class="project-role">Industrial Product Designer</span>
+            </div>
+            <div class="project-meta">
+              <span>Consumer Electronics</span> | <span>Class-A Surfacing, Injection Molding DFM, STEP</span>
+            </div>
+            <ul class="project-bullets">
+              <li>Formed complex ergonomic top-shell geometries using continuous curvature (G2/G3) surfacing tools.</li>
+              <li>Engineered internal rib structures, screw bosses, and draft angles (1.5°–3°) tailored for high-volume
+                plastic injection molding.</li>
+            </ul>
+          </div>
+
+        </section>
+
+      </div>
+
+      <!-- RIGHT COLUMN (SIDEBAR) -->
+      <div class="sidebar-column">
+
+        <!-- Technical Skills -->
+        <section class="section">
+          <div class="section-title">Core Competencies</div>
+
+          <div class="skill-category">
+            <div class="skill-cat-title">3D CAD &amp; Modeling</div>
+            <div class="skill-badges">
+              <span class="badge highlight">SolidWorks</span>
+              <span class="badge highlight">CATIA V5</span>
+              <span class="badge">Fusion 360</span>
+              <span class="badge">AutoCAD</span>
+              <span class="badge">Parametric Modeling</span>
+              <span class="badge">Class-A Surfacing</span>
+              <span class="badge">Multi-Body Assemblies</span>
+            </div>
+          </div>
+
+          <div class="skill-category">
+            <div class="skill-cat-title">Manufacturing &amp; DFM</div>
+            <div class="skill-badges">
+              <span class="badge highlight">ASME Y14.5 GD&amp;T</span>
+              <span class="badge highlight">DFM / DFA</span>
+              <span class="badge">Sheet Metal Fabrication</span>
+              <span class="badge">K-Factor &amp; Bends</span>
+              <span class="badge">Plastic Injection Molding</span>
+              <span class="badge">CNC Machining (3/5-Axis)</span>
+              <span class="badge">Die-Casting Tooling</span>
+              <span class="badge">3D Rapid Prototyping</span>
+            </div>
+          </div>
+
+          <div class="skill-category">
+            <div class="skill-cat-title">Analysis &amp; Simulation</div>
+            <div class="skill-badges">
+              <span class="badge cyan">ANSYS FEA</span>
+              <span class="badge cyan">Stress &amp; Strain Analysis</span>
+              <span class="badge cyan">Thermal Dissipation</span>
+              <span class="badge">CFD Flow Paths</span>
+              <span class="badge">Motion Simulation</span>
+              <span class="badge">Tolerance Stack-up</span>
+            </div>
+          </div>
+
+          <div class="skill-category">
+            <div class="skill-cat-title">Documentation &amp; Tools</div>
+            <div class="skill-badges">
+              <span class="badge">2D Technical Drafting</span>
+              <span class="badge">BOM Generation</span>
+              <span class="badge">STEP / IGES / STL</span>
+              <span class="badge">EASM Exploded Models</span>
+              <span class="badge">Engineering Blueprinting</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Education -->
+        <section class="section">
+          <div class="section-title">Education</div>
+          <div class="edu-item">
+            <div class="edu-degree">BS in Mechanical Engineering</div>
+            <div class="edu-school">Major in Machine Design &amp; CAD/CAM</div>
+            <div class="edu-date">2021 — 2025</div>
+          </div>
+        </section>
+
+        <!-- Certifications & Standards -->
+        <section class="section">
+          <div class="section-title">Certifications</div>
+          <div class="cert-item">
+            <strong>Certified SolidWorks Professional (CSWP)</strong> — Advanced Assembly &amp; Surfacing
+          </div>
+          <div class="cert-item">
+            <strong>ASME Y14.5 GD&amp;T Certification</strong> — Geometric Dimensioning &amp; Tolerancing
+          </div>
+          <div class="cert-item">
+            <strong>Design for Manufacturing (DFM)</strong> — Tooling &amp; Sheet Metal Specialist
+          </div>
+          <div class="cert-item">
+            <strong>Finite Element Analysis (FEA)</strong> — Structural &amp; Thermal Simulation Mastery
+          </div>
+        </section>
+
+        <!-- Languages & Professional Attributes -->
+        <section class="section">
+          <div class="section-title">Key Strengths</div>
+          <div class="skill-badges">
+            <span class="badge">Engineering Rigor</span>
+            <span class="badge">Cross-functional Design</span>
+            <span class="badge">Design Optimization</span>
+            <span class="badge">Rapid Iteration</span>
+            <span class="badge">High Torque Kinematics</span>
+          </div>
+        </section>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+
+</html>

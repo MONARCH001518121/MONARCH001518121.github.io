@@ -2535,7 +2535,8 @@
         const delta = Math.min((time - skillBallLastTime) / 16.67 || 1, 2);
         skillBallLastTime = time;
         ctx.clearRect(0, 0, section.clientWidth, section.clientHeight);
-        skillBalls.forEach(ball => updateSkillBall(ball, delta, section.clientWidth, section.clientHeight));
+          skillBalls.forEach(ball => updateSkillBall(ball, delta, section.clientWidth, section.clientHeight));
+          separateSkillBalls();
         skillBalls.forEach(ball => drawSkillBall(ctx, ball));
         skillBallFrame = requestAnimationFrame(frame);
       };
@@ -2550,7 +2551,14 @@
         const canvas = document.getElementById("skillBallsCanvas");
         if (!canvas) return;
         const width = canvas.clientWidth;
-        skillBalls.push({ index, x: width * (index + 1) / (orbData.length + 1), y: -46, radius: 38, vy: 0, vx: 0, floor: canvas.clientHeight - 58, color: skillBallColors[index], resting: false, rotation: 0 });
+        const columns = width >= 900 ? 6 : width >= 620 ? 4 : 3;
+        const row = Math.floor(index / columns);
+        const column = index % columns;
+        const rows = Math.ceil(orbData.length / columns);
+        const horizontalGap = Math.max(104, width / columns);
+        const targetX = horizontalGap * (column + 0.5);
+        const targetFloor = Math.min(canvas.clientHeight - 58, 238 + row * 116);
+        skillBalls.push({ index, x: targetX, targetX, y: -46, radius: 38, vy: 0, vx: 0, floor: targetFloor, color: skillBallColors[index], resting: false, rotation: 0, row, columns, rows });
       }, index * 1000));
     }
 
@@ -2573,11 +2581,30 @@
       if (ball.x < ball.radius) { ball.x = ball.radius; ball.vx = Math.abs(ball.vx) * 0.72; }
       if (ball.x > width - ball.radius) { ball.x = width - ball.radius; ball.vx = -Math.abs(ball.vx) * 0.72; }
       if (ball.y < ball.radius) { ball.y = ball.radius; ball.vy = Math.abs(ball.vy) * 0.45; }
-      const floor = height - 48;
+      const floor = ball.floor || height - 58;
       if (ball.y + ball.radius >= floor) {
         ball.y = floor - ball.radius;
         if (Math.abs(ball.vy) > 1.5) { ball.vy = -Math.abs(ball.vy) * 0.58; ball.vx *= 0.86; }
         else { ball.vy = 0; ball.vx *= 0.8; if (Math.abs(ball.vx) < 0.08) { ball.vx = 0; ball.resting = true; } }
+      }
+    }
+
+    function separateSkillBalls() {
+      for (let i = 0; i < skillBalls.length; i++) {
+        for (let j = i + 1; j < skillBalls.length; j++) {
+          const first = skillBalls[i], second = skillBalls[j];
+          if (first.row !== second.row) continue;
+          const dx = second.x - first.x, dy = second.y - first.y;
+          const distance = Math.hypot(dx, dy) || 0.001;
+          const minimum = first.radius + second.radius + 8;
+          if (distance < minimum) {
+            const push = (minimum - distance) * 0.5;
+            const nx = dx / distance, ny = dy / distance;
+            first.x -= nx * push; first.y -= ny * push;
+            second.x += nx * push; second.y += ny * push;
+            first.vx -= nx * 0.18; second.vx += nx * 0.18;
+          }
+        }
       }
     }
 

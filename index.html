@@ -1863,6 +1863,16 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
+  <!-- EmailJS SDK for Direct Email Integration -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function(){
+      emailjs.init({
+        publicKey: "9apxIjn0pkYGNKfyb",
+      });
+    })();
+  </script>
+
   <!-- Fail-safe Intro Dismiss script & Smoke Mist Engine -->
   <script>
     function dismissSplash(e) {
@@ -2185,44 +2195,61 @@
     function showTab(tab) { document.querySelectorAll(".tab").forEach(b => { b.classList.toggle("active", b.dataset.tab === tab); b.setAttribute("aria-selected", b.dataset.tab === tab) }); const panel = document.querySelector("#tabPanel"); if (tab === "renders") panel.innerHTML = `<p class="mono">VISUAL OUTPUT / ${activeProject.media.filter(m => m[0] === "image").length} RENDER(S) AVAILABLE. Use the viewer controls to cycle media.</p>`; if (tab === "videos") panel.innerHTML = activeProject.media.some(m => m[0] === "video") ? `<div class="asset-list">${activeProject.media.filter(m => m[0] === "video").map(m => `<a class="asset" href="${m[1]}" target="_blank">▶ ${m[1].split("/").pop()}</a>`).join("")}</div>` : `<p class="mono">NO MOTION CAPTURE ATTACHED TO THIS OBJECT.</p>`; if (tab === "downloads") panel.innerHTML = `<div class="asset-list">${activeProject.files.map(f => `<a class="asset" href="${f}" download>↓ ${f.split("/").pop()}</a>`).join("")}</div>`; if (tab === "specs") panel.innerHTML = `<div class="asset-list">${activeProject.specs.map(s => `<span class="asset">${s[0]}: ${s[1]}</span>`).join("")}</div>` }
     document.querySelectorAll(".filter").forEach(b => b.onclick = () => { document.querySelectorAll(".filter").forEach(x => x.classList.remove("active")); b.classList.add("active"); render(b.dataset.filter); play("click") }); document.querySelectorAll(".tab").forEach(b => b.onclick = () => showTab(b.dataset.tab)); document.querySelector("#nextMedia").onclick = () => changeMedia(1); document.querySelector("#closeModal").onclick = closeModal; modal.addEventListener("click", e => { if (e.target === modal) closeModal() }); document.addEventListener("keydown", e => { if (e.key === "Escape" && modal.classList.contains("open")) closeModal(); if (modal.classList.contains("open") && e.key === "ArrowRight") changeMedia(1); if (modal.classList.contains("open") && e.key === "ArrowLeft") changeMedia(-1) });
     function closeModal() { modal.classList.remove("open"); document.body.style.overflow = ""; viewer.innerHTML = "" } function play(type) { if (!audioOn) return; const C = window.AudioContext || window.webkitAudioContext; if (!C) return; const c = new C(), o = c.createOscillator(), g = c.createGain(); o.frequency.value = type === "click" ? 520 : 180; g.gain.setValueAtTime(.035, c.currentTime); g.gain.exponentialRampToValueAtTime(.001, c.currentTime + .08); o.connect(g).connect(c.destination); o.start(); o.stop(c.currentTime + .08) }
-    // Backend API Handlers
+    // EmailJS Direct Integration — No Backend Server Required
     async function handleContactSubmit(e) {
       e.preventDefault();
       const form = document.getElementById("contactForm");
       const btn = document.getElementById("contactSubmitBtn");
       const status = document.getElementById("formStatus");
 
-      const name = document.getElementById("contactName").value;
-      const email = document.getElementById("contactEmail").value;
-      const subject = document.getElementById("contactSubject").value;
-      const message = document.getElementById("contactMessage").value;
+      const name = document.getElementById("contactName").value.trim();
+      const email = document.getElementById("contactEmail").value.trim();
+      const subject = document.getElementById("contactSubject").value.trim() || "CAD Engineering Inquiry";
+      const message = document.getElementById("contactMessage").value.trim();
+
+      // Validation
+      if (!name || !email || !message) {
+        status.className = "form-status error";
+        status.textContent = "✕ Please fill in all required fields.";
+        return;
+      }
 
       status.className = "form-status";
-      status.textContent = "SENDING INQUIRY TO BACKEND...";
+      status.textContent = "SENDING YOUR MESSAGE...";
       btn.disabled = true;
       btn.style.opacity = "0.7";
 
       try {
-        const response = await fetch("/api/contact", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, subject, message })
-        });
+        // EmailJS Send via Template
+        const templateParams = {
+          from_name: name,
+          from_email: email,
+          subject: subject,
+          message: message,
+          to_name: "M Haseeb Imran"
+        };
 
-        const data = await response.json();
+        const response = await emailjs.send(
+          'service_saf1c6v',    // Service ID
+          'template_sji5wrq',   // Template ID
+          templateParams
+        );
 
-        if (response.ok && data.success) {
+        if (response.status === 200) {
           status.className = "form-status success";
-          status.textContent = "✓ " + (data.message || "Message sent successfully!");
+          status.textContent = "✓ Message sent successfully! I will respond to your inquiry shortly.";
           form.reset();
+
+          // Log success
+          console.log('Email sent successfully:', response);
         } else {
-          status.className = "form-status error";
-          status.textContent = "✕ " + (data.error || "Failed to send message. Please try again.");
+          throw new Error('EmailJS returned non-200 status');
         }
+
       } catch (err) {
-        console.error("API error:", err);
+        console.error("EmailJS error:", err);
         status.className = "form-status error";
-        status.textContent = "✕ Network error. Message saved in backend database.";
+        status.textContent = "✕ Failed to send message. Please email me directly at m.haseebimran518121@gmail.com";
       } finally {
         btn.disabled = false;
         btn.style.opacity = "1";

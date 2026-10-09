@@ -1352,6 +1352,15 @@
       z-index: 5;
     }
 
+    #skillBallsCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3;
+      pointer-events: auto;
+    }
+
     .skills-orbs-container {
       display: flex;
       justify-content: space-around;
@@ -1938,41 +1947,8 @@
           </button>
         </div>
 
-        <!-- 3D Glowing Spheres / Orbs Grid -->
-        <div class="skills-orbs-container" id="orbsContainer">
-          <!-- 3D Orb 0 -->
-          <div class="skill-orb" data-orb-index="0" id="orb0" onclick="handleOrbClick(0)">
-            <div class="orb-3d-ring"></div>
-            <div class="orb-icon">⚙️</div>
-            <div class="orb-title">CAD Modeling</div>
-            <div class="orb-prompt">CLICK 3D ORB ↘</div>
-          </div>
-
-          <!-- 3D Orb 1 -->
-          <div class="skill-orb" data-orb-index="1" id="orb1" onclick="handleOrbClick(1)">
-            <div class="orb-3d-ring"></div>
-            <div class="orb-icon">📐</div>
-            <div class="orb-title">Sheet Metal</div>
-            <div class="orb-prompt">CLICK 3D ORB ↘</div>
-          </div>
-
-          <!-- 3D Orb 2 -->
-          <div class="skill-orb" data-orb-index="2" id="orb2" onclick="handleOrbClick(2)">
-            <div class="orb-3d-ring"></div>
-            <div class="orb-icon">🔬</div>
-            <div class="orb-title">DFM / GD&amp;T</div>
-            <div class="orb-prompt">CLICK 3D ORB ↘</div>
-          </div>
-
-          <!-- 3D Orb 3 -->
-          <div class="skill-orb" data-orb-index="3" id="orb3" onclick="handleOrbClick(3)">
-            <div class="orb-3d-ring"></div>
-            <div class="orb-icon">🌊</div>
-            <div class="orb-title">HV / Thermal</div>
-            <div class="orb-prompt">CLICK 3D ORB ↘</div>
-          </div>
-        </div>
       </div>
+      <canvas id="skillBallsCanvas" aria-label="Interactive skill balls"></canvas>
     </section>
 
     <!-- 3D Orb Detail Interactive Modal -->
@@ -2431,46 +2407,97 @@
       document.body.removeChild(downloadLink);
     }
 
-    // 3D Glowing Orbs Data & Interactive Multi-Car Drive System
+    // Interactive skill balls & multi-car drive system
     const orbData = [
       {
-        icon: "⚙️",
-        title: "CAD Modeling & Assemblies",
-        desc: "Advanced multi-body parametric modeling, top-down assembly structure, complex surfacing, motion simulation & dynamic interference checking in SolidWorks, CATIA V5, and Fusion 360.",
-        tags: ["SOLIDWORKS", "CATIA V5", "FUSION 360", "PARAMETRIC DESIGN", "MOTION ANALYSIS"]
+        icon: "●",
+        title: "SolidWorks",
+        desc: "Advanced multi-body parametric modeling, top-down assembly structure, complex surfacing, and motion simulation.",
+        tags: ["CAD MODELING", "ASSEMBLIES", "MOTION ANALYSIS"]
       },
       {
-        icon: "📐",
-        title: "Sheet Metal & Surfacing",
-        desc: "Flat pattern bend allowances, K-factor calculations, high-precision electronic enclosures, Class-A automotive surfacing, plastic injection mould design & ergonomic surface curvature validation.",
-        tags: ["BEND ALLOWANCE", "CLASS-A SURFACING", "MOULD DESIGN", "ENCLOSURE FABRICATION"]
+        icon: "●",
+        title: "CATIA V5",
+        desc: "Surface-led product development, assembly design, and precision automotive component modeling.",
+        tags: ["SURFACING", "ASSEMBLY DESIGN", "AUTOMOTIVE CAD"]
       },
       {
-        icon: "🔬",
-        title: "DFM / DFA & GD&T Specifications",
-        desc: "Design for Manufacturing & Assembly readiness, ASME Y14.5 geometric dimensioning and tolerancing, CNC machining tool paths, die-casting draft angles & CMM inspection specs.",
-        tags: ["ASME Y14.5", "GD&T", "CNC MACHINING", "DIE CASTING", "TOLERANCE STACK-UP"]
+        icon: "●",
+        title: "Fusion 360",
+        desc: "Integrated concept-to-manufacture workflows for mechanical parts, assemblies, and product prototypes.",
+        tags: ["PROTOTYPING", "CAM", "PRODUCT DESIGN"]
       },
       {
-        icon: "🌊",
-        title: "HV / Thermal & FEA Simulation",
-        desc: "Fluid dynamic flow paths, active HVAC thermal dissipation calculations, structural finite element stress analysis, thermal hotspot elimination & vibration frequency spectrum testing.",
-        tags: ["ANSYS FEA", "THERMAL DISSIPATION", "FLOW PATH CFD", "STRUCTURAL TESTING"]
+        icon: "●",
+        title: "AutoCAD",
+        desc: "Clear 2D engineering drawings, layouts, detailing, and documentation for build-ready designs.",
+        tags: ["2D DRAWINGS", "DETAILING", "DOCUMENTATION"]
+      },
+      {
+        icon: "●",
+        title: "ANSYS FEA",
+        desc: "Structural simulation and engineering analysis for validating loads, stress, and deformation.",
+        tags: ["FEA", "STRESS", "STRUCTURAL ANALYSIS"]
+      },
+      {
+        icon: "●",
+        title: "GD&T",
+        desc: "Manufacturing-ready geometric dimensioning and tolerancing aligned with ASME Y14.5 principles.",
+        tags: ["ASME Y14.5", "TOLERANCES", "INSPECTION"]
+      },
+      {
+        icon: "●",
+        title: "Sheet Metal",
+        desc: "Folded enclosure design with bend allowances, service access, and fabrication-aware detailing.",
+        tags: ["BEND ALLOWANCE", "ENCLOSURES", "FABRICATION"]
+      },
+      {
+        icon: "●",
+        title: "DFM / DFA",
+        desc: "Design for manufacturing and assembly readiness, reducing complexity while protecting function.",
+        tags: ["MANUFACTURING", "ASSEMBLY", "COST REDUCTION"]
+      },
+      {
+        icon: "●",
+        title: "Motion Analysis",
+        desc: "Mechanism studies focused on repeatable movement, interference checking, and assembly behavior.",
+        tags: ["KINEMATICS", "INTERFERENCE", "MECHANISMS"]
+      },
+      {
+        icon: "●",
+        title: "CFD",
+        desc: "Flow-path thinking for fluid systems, airflow, and thermal management concepts.",
+        tags: ["FLOW PATHS", "AIRFLOW", "THERMAL"]
+      },
+      {
+        icon: "●",
+        title: "Parametric Design",
+        desc: "Flexible feature-driven models that remain controlled, editable, and ready for iteration.",
+        tags: ["FEATURE TREES", "DESIGN INTENT", "ITERATION"]
+      },
+      {
+        icon: "●",
+        title: "Class-A Surfacing",
+        desc: "High-quality surface development for smooth, controlled consumer and automotive forms.",
+        tags: ["SURFACES", "CURVATURE", "AESTHETICS"]
       }
     ];
 
     let currentOrbSequence = 0;
+    const skillBallColors = ["#19c943", "#ffe000", "#ff7214", "#168bd8", "#ef1741", "#8664d8", "#f4f4f4", "#ff8c18", "#17c93d", "#f3df00", "#ff6510", "#198bd6"];
+    let skillBalls = [], skillBallFrame = 0, skillBallStarted = false, skillBallLastTime = 0, skillBallPointer = null;
 
     function setupInteractive3DOrbs() {
       const section = document.getElementById("skills");
       const bgVideo = document.getElementById("skillsBgVideo");
-      const orbs = document.querySelectorAll(".skill-orb");
       if (!section || !bgVideo) return;
+      setupSkillBalls(section);
 
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             triggerCarSequence(0);
+            startSkillBallSequence();
           }
         });
       }, { threshold: 0.2 });
@@ -2478,9 +2505,96 @@
       observer.observe(section);
     }
 
+    function setupSkillBalls(section) {
+      const canvas = document.getElementById("skillBallsCanvas");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      const resize = () => {
+        const scale = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = section.clientWidth * scale;
+        canvas.height = section.clientHeight * scale;
+        canvas.style.width = `${section.clientWidth}px`;
+        canvas.style.height = `${section.clientHeight}px`;
+        ctx.setTransform(scale, 0, 0, scale, 0, 0);
+        skillBalls.forEach(ball => { ball.floor = section.clientHeight - 48; ball.x = Math.max(ball.radius, Math.min(section.clientWidth - ball.radius, ball.x)); });
+      };
+      const pointerPosition = event => {
+        const rect = canvas.getBoundingClientRect();
+        return { x: event.clientX - rect.left, y: event.clientY - rect.top };
+      };
+      canvas.addEventListener("pointermove", event => { skillBallPointer = pointerPosition(event); });
+      canvas.addEventListener("pointerleave", () => { skillBallPointer = null; });
+      canvas.addEventListener("pointerdown", event => {
+        const point = pointerPosition(event);
+        const ball = [...skillBalls].reverse().find(item => Math.hypot(item.x - point.x, item.y - point.y) < item.radius * 1.35);
+        if (ball) { ball.vx = (point.x - ball.x) * 0.16; ball.vy = -Math.max(7, (ball.y - point.y) * 0.12); ball.resting = false; handleOrbClick(ball.index); }
+      });
+      window.addEventListener("resize", resize);
+      resize();
+      const frame = time => {
+        const delta = Math.min((time - skillBallLastTime) / 16.67 || 1, 2);
+        skillBallLastTime = time;
+        ctx.clearRect(0, 0, section.clientWidth, section.clientHeight);
+        skillBalls.forEach(ball => updateSkillBall(ball, delta, section.clientWidth, section.clientHeight));
+        skillBalls.forEach(ball => drawSkillBall(ctx, ball));
+        skillBallFrame = requestAnimationFrame(frame);
+      };
+      skillBallFrame = requestAnimationFrame(frame);
+    }
+
+    function startSkillBallSequence() {
+      if (skillBallStarted) return;
+      skillBallStarted = true;
+      skillBalls = [];
+      orbData.forEach((data, index) => setTimeout(() => {
+        const canvas = document.getElementById("skillBallsCanvas");
+        if (!canvas) return;
+        const width = canvas.clientWidth;
+        skillBalls.push({ index, x: width * (index + 1) / (orbData.length + 1), y: -38, radius: 28, vy: 0, vx: 0, floor: canvas.clientHeight - 48, color: skillBallColors[index], resting: false, rotation: 0 });
+      }, index * 1000));
+    }
+
+    function updateSkillBall(ball, delta, width, height) {
+      if (ball.resting && !skillBallPointer) return;
+      const gravity = 0.62;
+      if (skillBallPointer && Math.hypot(ball.x - skillBallPointer.x, ball.y - skillBallPointer.y) < 130) {
+        ball.vx += (ball.x - skillBallPointer.x) * 0.0025 * delta;
+        ball.vy -= 0.03 * delta;
+        ball.resting = false;
+      }
+      ball.vy += gravity * delta;
+      ball.x += ball.vx * delta;
+      ball.y += ball.vy * delta;
+      ball.vx *= Math.pow(0.992, delta);
+      ball.rotation += ball.vx * 0.025 * delta;
+      if (ball.x < ball.radius) { ball.x = ball.radius; ball.vx = Math.abs(ball.vx) * 0.72; }
+      if (ball.x > width - ball.radius) { ball.x = width - ball.radius; ball.vx = -Math.abs(ball.vx) * 0.72; }
+      const floor = height - 48;
+      if (ball.y + ball.radius >= floor) {
+        ball.y = floor - ball.radius;
+        if (Math.abs(ball.vy) > 1.5) { ball.vy = -Math.abs(ball.vy) * 0.58; ball.vx *= 0.86; }
+        else { ball.vy = 0; ball.vx *= 0.8; if (Math.abs(ball.vx) < 0.08) { ball.vx = 0; ball.resting = true; } }
+      }
+    }
+
+    function drawSkillBall(ctx, ball) {
+      ctx.save();
+      ctx.translate(ball.x, ball.y);
+      const light = ctx.createRadialGradient(-10, -12, 2, 0, 0, ball.radius);
+      light.addColorStop(0, "#ffffffcc"); light.addColorStop(0.18, ball.color); light.addColorStop(1, "#050509");
+      ctx.fillStyle = light; ctx.shadowColor = ball.color; ctx.shadowBlur = 18;
+      ctx.beginPath(); ctx.arc(0, 0, ball.radius, 0, Math.PI * 2); ctx.fill();
+      ctx.shadowBlur = 0; ctx.clip(); ctx.rotate(ball.rotation);
+      ctx.strokeStyle = "#ffffffaa"; ctx.lineWidth = 2.4;
+      ctx.beginPath(); ctx.arc(-4, 0, ball.radius * 0.82, -1.08, 1.08); ctx.stroke();
+      ctx.beginPath(); ctx.arc(7, 0, ball.radius * 0.82, 2.06, 4.22); ctx.stroke();
+      ctx.restore();
+      ctx.fillStyle = "#fff"; ctx.font = '700 10px "Space Mono"'; ctx.textAlign = "center";
+      ctx.fillText(orbData[ball.index].title.toUpperCase(), ball.x, ball.y + ball.radius + 17);
+    }
+
     function triggerCarSequence(stepIndex) {
       const bgVideo = document.getElementById("skillsBgVideo");
-      const orbs = document.querySelectorAll(".skill-orb");
       if (!bgVideo) return;
 
       const totalDuration = bgVideo.duration || 9;
@@ -2492,17 +2606,6 @@
 
       if (typeof play === "function") play("click");
 
-      // Activate corresponding 3D Orb after car drive-by
-      setTimeout(() => {
-        if (stepIndex < 4) {
-          const targetOrb = document.getElementById(`orb${stepIndex}`);
-          if (targetOrb) {
-            targetOrb.classList.add("is-active");
-          }
-        } else {
-          orbs.forEach(o => o.classList.add("is-active"));
-        }
-      }, 1200);
     }
 
     function handleOrbClick(index) {

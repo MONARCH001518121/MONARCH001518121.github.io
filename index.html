@@ -1316,6 +1316,7 @@
     /* Standalone Interactive 3D Orbs & Multi-Car Sequential Section */
     .interactive-skills-section {
       position: relative;
+      min-height: 820px;
       padding: 120px 0 150px;
       background: #060608;
       border-top: 1px solid rgba(255, 30, 66, 0.25);
@@ -2516,7 +2517,10 @@
         canvas.style.width = `${section.clientWidth}px`;
         canvas.style.height = `${section.clientHeight}px`;
         ctx.setTransform(scale, 0, 0, scale, 0, 0);
-        skillBalls.forEach(ball => { ball.floor = section.clientHeight - 48; ball.x = Math.max(ball.radius, Math.min(section.clientWidth - ball.radius, ball.x)); });
+        skillBalls.forEach(ball => {
+          ball.floor = Math.min(section.clientHeight - 72, 360 + ball.row * 130);
+          ball.x = Math.max(ball.radius, Math.min(section.clientWidth - ball.radius, ball.x));
+        });
       };
       const pointerPosition = event => {
         const rect = canvas.getBoundingClientRect();
@@ -2536,7 +2540,7 @@
         skillBallLastTime = time;
         ctx.clearRect(0, 0, section.clientWidth, section.clientHeight);
           skillBalls.forEach(ball => updateSkillBall(ball, delta, section.clientWidth, section.clientHeight));
-          separateSkillBalls();
+          collideSkillBalls();
         skillBalls.forEach(ball => drawSkillBall(ctx, ball));
         skillBallFrame = requestAnimationFrame(frame);
       };
@@ -2555,10 +2559,10 @@
         const row = Math.floor(index / columns);
         const column = index % columns;
         const rows = Math.ceil(orbData.length / columns);
-        const horizontalGap = Math.max(104, width / columns);
+        const horizontalGap = Math.max(116, width / columns);
         const targetX = horizontalGap * (column + 0.5);
-        const targetFloor = Math.min(canvas.clientHeight - 58, 238 + row * 116);
-        skillBalls.push({ index, x: targetX, targetX, y: -46, radius: 38, vy: 0, vx: 0, floor: targetFloor, color: skillBallColors[index], resting: false, rotation: 0, row, columns, rows });
+        const targetFloor = Math.min(canvas.clientHeight - 72, 360 + row * 130);
+        skillBalls.push({ index, x: targetX, targetX, y: -58, radius: 50, vy: 0, vx: 0, floor: targetFloor, color: skillBallColors[index], resting: false, rotation: 0, row, columns, rows });
       }, index * 1000));
     }
 
@@ -2589,20 +2593,26 @@
       }
     }
 
-    function separateSkillBalls() {
+    function collideSkillBalls() {
       for (let i = 0; i < skillBalls.length; i++) {
         for (let j = i + 1; j < skillBalls.length; j++) {
           const first = skillBalls[i], second = skillBalls[j];
-          if (first.row !== second.row) continue;
           const dx = second.x - first.x, dy = second.y - first.y;
           const distance = Math.hypot(dx, dy) || 0.001;
-          const minimum = first.radius + second.radius + 8;
+          const minimum = first.radius + second.radius;
           if (distance < minimum) {
-            const push = (minimum - distance) * 0.5;
+            const overlap = minimum - distance;
             const nx = dx / distance, ny = dy / distance;
-            first.x -= nx * push; first.y -= ny * push;
-            second.x += nx * push; second.y += ny * push;
-            first.vx -= nx * 0.18; second.vx += nx * 0.18;
+            first.x -= nx * (overlap * 0.5); first.y -= ny * (overlap * 0.5);
+            second.x += nx * (overlap * 0.5); second.y += ny * (overlap * 0.5);
+            const relativeVelocity = (second.vx - first.vx) * nx + (second.vy - first.vy) * ny;
+            if (relativeVelocity < 0) {
+              const impulse = -relativeVelocity * 0.88;
+              first.vx -= impulse * nx; first.vy -= impulse * ny;
+              second.vx += impulse * nx; second.vy += impulse * ny;
+            }
+            first.resting = false;
+            second.resting = false;
           }
         }
       }

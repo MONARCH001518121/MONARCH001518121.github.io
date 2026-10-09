@@ -2557,18 +2557,22 @@
     function updateSkillBall(ball, delta, width, height) {
       if (ball.resting && !skillBallPointer) return;
       const gravity = 0.62;
-      if (skillBallPointer && Math.hypot(ball.x - skillBallPointer.x, ball.y - skillBallPointer.y) < 130) {
-        ball.vx += (ball.x - skillBallPointer.x) * 0.0025 * delta;
-        ball.vy -= 0.03 * delta;
+      if (skillBallPointer && Math.hypot(ball.x - skillBallPointer.x, ball.y - skillBallPointer.y) < 190) {
+        ball.vx += (skillBallPointer.x - ball.x) * 0.012 * delta;
+        ball.vy += (skillBallPointer.y - ball.y) * 0.006 * delta;
+        ball.vy -= 0.08 * delta;
         ball.resting = false;
       }
       ball.vy += gravity * delta;
+      ball.vx = Math.max(-12, Math.min(12, ball.vx));
+      ball.vy = Math.max(-14, Math.min(14, ball.vy));
       ball.x += ball.vx * delta;
       ball.y += ball.vy * delta;
       ball.vx *= Math.pow(0.992, delta);
       ball.rotation += ball.vx * 0.025 * delta;
       if (ball.x < ball.radius) { ball.x = ball.radius; ball.vx = Math.abs(ball.vx) * 0.72; }
       if (ball.x > width - ball.radius) { ball.x = width - ball.radius; ball.vx = -Math.abs(ball.vx) * 0.72; }
+      if (ball.y < ball.radius) { ball.y = ball.radius; ball.vy = Math.abs(ball.vy) * 0.45; }
       const floor = height - 48;
       if (ball.y + ball.radius >= floor) {
         ball.y = floor - ball.radius;
@@ -2584,13 +2588,12 @@
       light.addColorStop(0, "#ffffff80"); light.addColorStop(0.16, ball.color); light.addColorStop(0.72, ball.color); light.addColorStop(1, "#171717");
       ctx.fillStyle = light;
       ctx.beginPath(); ctx.arc(0, 0, ball.radius, 0, Math.PI * 2); ctx.fill();
-      ctx.clip(); ctx.rotate(ball.rotation);
-      ctx.strokeStyle = "#f5f5f5cc"; ctx.lineWidth = 2.8;
-      ctx.beginPath(); ctx.arc(-4, 0, ball.radius * 0.82, -1.08, 1.08); ctx.stroke();
-      ctx.beginPath(); ctx.arc(7, 0, ball.radius * 0.82, 2.06, 4.22); ctx.stroke();
       ctx.restore();
       ctx.fillStyle = "#fff"; ctx.font = '700 10px "Space Mono"'; ctx.textAlign = "center";
-      ctx.fillText(orbData[ball.index].title.toUpperCase(), ball.x, ball.y + ball.radius + 17);
+      ctx.textBaseline = "middle";
+      ctx.shadowColor = "#000"; ctx.shadowBlur = 4;
+      ctx.fillText(orbData[ball.index].title.toUpperCase(), ball.x, ball.y);
+      ctx.shadowBlur = 0;
     }
 
     function triggerCarSequence(stepIndex) {
